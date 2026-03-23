@@ -18,15 +18,90 @@
             xhr.onload = function () {
                 const bodyElement = document.querySelector("body")
                 if (xhr.status == 200) {
-		            /* Part 2: Build the HTML elements here and append them to the body */ 
+                    /* Part 2: Build the HTML elements here and append them to the body */ 
+
+                    const movies = JSON.parse(xhr.responseText);
+                    function createMovieCard(movie){
+                        const container = document.createElement("div");
+                        container.style.marginBottom = "30px"
+
+                        //Poster
+                        const image = document.createElement("img");
+                        image.src = movie.Poster;
+                        image.style.width = "300px";
+
+                        //Title
+                        const title = document.createElement("h2");
+                        title.textContent = movie.Title;
+
+                        //runtime and Release
+                        const runtimeRelease = document.createElement("p");
+                        runtimeRelease.textContent = 'Runtime ' + (movie.Runtime) + ' - Released on ' + (movie.Released); //ask
+
+                        //genres
+                        const genres = document.createElement("p");
+                        genres.textContent = movie.Genres;
+
+                        //Plot
+                        const plot = document.createElement("p");
+                        plot.textContent = movie.Plot;
+
+                        //Directors
+                        const directorTitle = document.createElement("h3");
+                        directorTitle.textContent = "Directors";
+
+                        const directorList = document.createElement("ul")
+                        for(const director of movie.Directors){
+                            const listElement = document.createElement("li");
+                            listElement.textContent = director;
+                            directorList.appendChild(listElement) //ask
+                        }
+                        //Writers
+                        const writerTitle = document.createElement("h3")
+                        writerTitle.textContent = "Writers"
+
+                        const writerList = document.createElement("ul")
+                        for(const writer of movie.Writers){
+                            const listElement = document.createElement("li");
+                            listElement.textContent = writer;
+                            writerList.appendChild(listElement) //ask
+                        }
+                        //Actors
+                        const actorTitle = document.createElement("h3")
+                        actorTitle.textContent = "Actors"
+
+                        const actorList = document.createElement("ul");
+                        for(const actor of movie.Actors){
+                            const listElement = document.createElement("li");
+                            listElement.textContent = actor;
+                            actorList.appendChild(listElement); //ask
+                        }
+                        container.appendChild(image);
+                        container.appendChild(title);
+                        container.appendChild(runtimeRelease);
+                        container.appendChild(genres);
+                        container.appendChild(plot);
+                        container.appendChild(directorTitle);
+                        container.appendChild(directorList);
+                        container.appendChild(writerTitle);
+                        container.appendChild(writerList);
+                        container.appendChild(actorTitle);
+                        container.appendChild(actorList);
+
+                        bodyElement.appendChild(container)
+                    }
+                    for(const movie of movies){
+                        createMovieCard(movie);
+                    }
                     bodyElement.append(reverseString(xhr.responseText))
                 } else {
                     bodyElement.append("Daten konnten nicht geladen werden, Status " + xhr.status + " - " + xhr.statusText)
                 }
             }
-            xhr.open("GET", "/movies")
+            xhr.open("GET", "http://localhost:3000/movies")
             xhr.send()
         }
+
     </script>
 
 </head>
