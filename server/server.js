@@ -1,14 +1,13 @@
 const express = require('express')
 const path = require('path')
 const app = express()
-
+/*
 const fs = require("fs");
 const { format, json } = require('express/lib/response');
 const raw = fs.readFileSync("movie.json", "utf-8")
 const movie = JSON.parse(raw)
-
 const filteredMovie = pick(movie,keys); 
-
+*/
 const movies = [{
               "Title":"The Lord of the Rings: The Fellowship of the Ring",
               "Released":"2001-12-19",
@@ -50,7 +49,7 @@ const movies = [{
           
           }]
 
-
+/*
 const keys = ["Title", "Released", "Runtime", "Genre", "Director", "Writer", "Actors", "Plot", "Poster", "Metascore", "imdbRating"]
 let keylength = keys.length;
 
@@ -78,7 +77,7 @@ function pick(obj, keys){
   }))
         
 }
-
+*/
 // Serve static content in directory 'files'
 app.use(express.static(path.join(__dirname, 'files')));
 

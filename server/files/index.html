@@ -7,12 +7,35 @@
     <title>Movies!</title>
     <style>
         /* Part 3: Your styling goes here */
+        body{
+            font-family:'Trebuchet MS', sans-serif, monospace;
+        }
+        img{
+            border-radius: 10px;
+            max-width: 100%;
+        }
+        h1{
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        article{
+            background-color: #f5f5f5;
+            border-radius: 12px;
+            margin: 30px;
+            padding: 20px;
+            box-shadow: 3px 3px;
+        }
+        span{
+            margin-right: 10 px;
+        }
+        .genre{
+            background-color: lightgray;
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-block
+        }
     </style>
     <script>
-        function reverseString(s) {
-            return s.split("").reverse().join("");
-        }
-
         window.onload = function () {
             const xhr = new XMLHttpRequest()
             xhr.onload = function () {
@@ -22,7 +45,7 @@
 
                     const movies = JSON.parse(xhr.responseText);
                     function createMovieCard(movie){
-                        const container = document.createElement("div");
+                        const container = document.createElement("article");
                         container.style.marginBottom = "30px"
 
                         //Poster
@@ -31,7 +54,7 @@
                         image.style.width = "300px";
 
                         //Title
-                        const title = document.createElement("h2");
+                        const title = document.createElement("h1");
                         title.textContent = movie.Title;
 
                         //runtime and Release
@@ -40,7 +63,12 @@
 
                         //genres
                         const genres = document.createElement("p");
-                        genres.textContent = movie.Genres;
+                        for(const genre of movie.Genres){
+                            const span = document.createElement("span")
+                            span.classList.add("genre")
+                            span.textContent = genre
+                            genres.appendChild(span)
+                        }
 
                         //Plot
                         const plot = document.createElement("p");
@@ -79,7 +107,7 @@
                         container.appendChild(image);
                         container.appendChild(title);
                         container.appendChild(runtimeRelease);
-                        container.appendChild(genres);
+                        container.appendChild(genres)
                         container.appendChild(plot);
                         container.appendChild(directorTitle);
                         container.appendChild(directorList);
@@ -93,7 +121,6 @@
                     for(const movie of movies){
                         createMovieCard(movie);
                     }
-                    bodyElement.append(reverseString(xhr.responseText))
                 } else {
                     bodyElement.append("Daten konnten nicht geladen werden, Status " + xhr.status + " - " + xhr.statusText)
                 }
